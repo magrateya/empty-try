@@ -1,0 +1,9 @@
+.castItem {
+  width: calc(100% / 6);
+  margin: 15px;
+  list-style: none;
+  border: 1px solid #ccc;
+}
+.castImg {
+  max-width: 100%;
+}
