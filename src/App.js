@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Container from './components/Container/Container';
 import AppBar from './components/AppBar/AppBar';
 import Loader from './components/Loader/Loader';
@@ -17,6 +18,7 @@ const NotFoundView = lazy(() =>
   import('./views/NotFoundView' /* webpackChunkName: "404-page" */),
 );
 
+const queryClient = new QueryClient();
 export default function App() {
   return (
     <Container>
@@ -24,18 +26,19 @@ export default function App() {
 
       <Suspense fallback={<Loader />}>
         <Switch>
-          <Route path="/" exact>
-            <HomeView />
-          </Route>
+          <QueryClientProvider client={queryClient}>
+            <Route path="/" exact>
+              <HomeView />
+            </Route>
 
-          <Route path="/movies/:slug">
-            <MovieDetailView />
-          </Route>
+            <Route path="/movies/:slug">
+              <MovieDetailView />
+            </Route>
 
-          <Route path="/movies">
-            <MoviesView />
-          </Route>
-
+            <Route path="/movies" exact>
+              <MoviesView />
+            </Route>
+          </QueryClientProvider>
           <Route>
             <NotFoundView />
           </Route>
